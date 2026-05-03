@@ -1,0 +1,15 @@
+{{ define "title" }}{{ .Params.name }} - {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<h1>{{ .Params.name }}</h1>
+<dl>
+  <dt>Identifier</dt>
+  <dd>{{ .Params.identifier }}</dd>
+  <dt>Visibility</dt>
+  <dd>{{ if .Params.project_is_public }}Public{{ else }}Private{{ end }}</dd>
+  <dt>Created</dt>
+  <dd>{{ .Params.created_on }}</dd>
+</dl>
+<div class="content">
+  {{ .Content }}
+</div>
+{{ end }}

@@ -1,0 +1,51 @@
+[project]
+name = "staticmine"
+version = "0.1.0"
+description = "Convert Redmine data to a static HTML site"
+authors = [
+    { name = "thaim", email = "thaim24@gmail.com" },
+]
+requires-python = ">=3.13,<3.15"
+dependencies = [
+    "python-redmine>=2.4.0",
+    "requests>=2.31.0",
+    "PyYAML>=6.0",
+    "click>=8.1.0",
+]
+
+[project.scripts]
+staticmine = "staticmine.cli:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0",
+    "vcrpy>=6.0.0",
+    "types-PyYAML>=6.0.0",
+    "types-requests>=2.31.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+
+[[tool.mypy.overrides]]
+module = ["redminelib.*", "vcr.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=staticmine --cov-report=term-missing"

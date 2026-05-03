@@ -1,0 +1,17 @@
+{{ define "title" }}Projects - {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<h1>Projects</h1>
+<ul>
+  {{ range .Pages }}
+  <li>
+    <a href="{{ .Permalink }}">{{ .Params.name }}</a>
+    ({{ .Params.identifier }})
+    {{ if .Params.project_is_public }}
+      <span>[public]</span>
+    {{ else }}
+      <span>[private]</span>
+    {{ end }}
+  </li>
+  {{ end }}
+</ul>
+{{ end }}

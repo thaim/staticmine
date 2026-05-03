@@ -1,0 +1,33 @@
+# Pipeline output directories
+raw/
+content/
+public/
+
+# Configuration (keep examples/ only — leading slash limits to repo root)
+/staticmine.yaml
+
+# Python build artifacts and caches
+.coverage
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.venv/
+
+# Hugo build caches
+hugo/resources/
+hugo/resources/_gen/
+hugo/.hugo_build.lock
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+
+# Steering documents (local work records)
+docs/steering/

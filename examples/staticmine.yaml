@@ -1,0 +1,8 @@
+redmine:
+  url: https://redmine.example.com
+  api_key: your_api_key_here
+
+output:
+  raw: raw/
+  content: content/
+  public: public/
