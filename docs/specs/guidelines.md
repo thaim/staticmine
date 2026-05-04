@@ -125,6 +125,32 @@ Closes #42
 - パラメタライズが多い場合は `pytest.mark.parametrize` を使用し、`ids` で各ケース名を付与する
 - フィクスチャは `tests/conftest.py` または対象に近い `conftest.py` に集約する
 
+## 動作検証
+
+### 開発時の動作確認手順
+
+自動テスト（ユニット / 統合）に加え、ブラウザでの実動作確認を行う。標準フロー:
+
+```bash
+uv run staticmine fetch --config staticmine.yaml
+uv run staticmine convert --config staticmine.yaml
+hugo serve --source hugo --contentDir ../content
+```
+
+ブラウザで `http://localhost:1313/` を開き、生成されたページが期待どおり表示されるか確認する。
+
+### Hugo serve の制約と対処
+
+`hugo serve --contentDir <hugo source 外のパス>` を指定した場合、Hugo は **指定 contentDir の変更を監視しない**。`hugo/` ディレクトリ内の変更のみが検知対象となる。
+
+そのため以下を守る:
+
+- 開発フローは **fetch → convert → hugo serve 起動** の順で実施する
+- `staticmine convert` を再実行した場合は `hugo serve` も**再起動**する
+- 静的ビルド（`hugo --contentDir ../content --destination public`）は外部 contentDir でも正常に反映される（serve のみの制約）
+
+この制約を踏まえ、CI / 統合テストでは `hugo serve` ではなく `hugo build` を使用する（既に `tests/integration/test_build_smoke.py` で対応済み）。
+
 ## レビュー基準
 
 ### 必須チェック項目
