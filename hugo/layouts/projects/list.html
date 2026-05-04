@@ -1,5 +1,6 @@
-{{ define "title" }}Projects - {{ .Site.Title }}{{ end }}
+{{ define "title" }}{{ if .Parent.IsHome }}Projects{{ else }}{{ .Params.name }}{{ end }} - {{ .Site.Title }}{{ end }}
 {{ define "main" }}
+{{ if .Parent.IsHome }}
 <h1>Projects</h1>
 <ul>
   {{ range .Pages }}
@@ -14,4 +15,20 @@
   </li>
   {{ end }}
 </ul>
+{{ else }}
+<h1>{{ .Params.name }}</h1>
+<dl>
+  <dt>Identifier</dt>
+  <dd>{{ .Params.identifier }}</dd>
+  <dt>Visibility</dt>
+  <dd>{{ if .Params.project_is_public }}Public{{ else }}Private{{ end }}</dd>
+  <dt>Created</dt>
+  <dd>{{ .Params.created_on }}</dd>
+  <dt>Issues</dt>
+  <dd><a href="{{ .RelPermalink }}issues/">Issue 一覧</a></dd>
+</dl>
+<div class="content">
+  {{ .Content }}
+</div>
+{{ end }}
 {{ end }}

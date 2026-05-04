@@ -1,0 +1,20 @@
+{{ define "title" }}#{{ .Params.id }} {{ .Params.title }} - {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<h1>#{{ .Params.id }} {{ .Params.title }}</h1>
+<dl>
+  <dt>Status</dt>
+  <dd>{{ .Params.status }}</dd>
+  <dt>Tracker</dt>
+  <dd>{{ .Params.tracker }}</dd>
+  <dt>Priority</dt>
+  <dd>{{ .Params.priority }}</dd>
+  <dt>Created</dt>
+  <dd>{{ .Params.created_on }}</dd>
+  <dt>Updated</dt>
+  <dd>{{ .Params.updated_on }}</dd>
+</dl>
+<div class="content">
+  {{ .Content }}
+</div>
+<p><a href="{{ .Parent.Permalink }}">&larr; Issue 一覧へ</a></p>
+{{ end }}

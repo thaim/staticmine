@@ -8,6 +8,8 @@
   <dd>{{ if .Params.project_is_public }}Public{{ else }}Private{{ end }}</dd>
   <dt>Created</dt>
   <dd>{{ .Params.created_on }}</dd>
+  <dt>Issues</dt>
+  <dd><a href="{{ .RelPermalink }}issues/">Issue 一覧</a></dd>
 </dl>
 <div class="content">
   {{ .Content }}

@@ -1,7 +1,3 @@
 baseURL = "http://localhost/"
 title = "Redmine Archive"
 languageCode = "ja"
-
-[permalinks]
-  [permalinks.page]
-    projects = "/projects/:slug/"

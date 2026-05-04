@@ -8,7 +8,9 @@ from pathlib import Path
 import click
 
 from staticmine.config.loader import load_config
+from staticmine.converter.issues import convert_issues
 from staticmine.converter.projects import convert_projects
+from staticmine.fetcher.issues import fetch_issues
 from staticmine.fetcher.projects import fetch_projects
 
 logger = logging.getLogger(__name__)
@@ -46,7 +48,9 @@ def fetch(config_path: str, out_dir: str | None) -> None:
     """
     cfg = load_config(config_path)
     raw_dir = out_dir if out_dir is not None else cfg.raw_dir
-    fetch_projects(cfg.redmine_url, cfg.api_key, Path(raw_dir))
+    raw_path = Path(raw_dir)
+    fetch_projects(cfg.redmine_url, cfg.api_key, raw_path)
+    fetch_issues(cfg.redmine_url, cfg.api_key, raw_path)
     click.echo(f"Fetch complete. Output: {raw_dir}")
 
 
@@ -86,7 +90,10 @@ def convert(config_path: str, in_dir: str | None, out_dir: str | None) -> None:
         cfg = load_config(config_path)
         raw_dir = in_dir if in_dir is not None else cfg.raw_dir
         content_dir = out_dir if out_dir is not None else cfg.content_dir
-    convert_projects(Path(raw_dir), Path(content_dir))
+    raw_path = Path(raw_dir)
+    content_path = Path(content_dir)
+    convert_projects(raw_path, content_path)
+    convert_issues(raw_path, content_path)
     click.echo(f"Convert complete. Output: {content_dir}")
 
 

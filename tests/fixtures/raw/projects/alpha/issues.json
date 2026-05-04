@@ -1,0 +1,51 @@
+{
+  "total_count": 2,
+  "issues": [
+    {
+      "id": 1,
+      "project": {
+        "id": 1,
+        "identifier": "alpha",
+        "name": "Alpha Project"
+      },
+      "subject": "サンプルチケット1",
+      "status": {
+        "id": 1,
+        "name": "New"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "priority": {
+        "id": 2,
+        "name": "Normal"
+      },
+      "created_on": "2021-01-15T10:00:00Z",
+      "updated_on": "2021-02-01T09:30:00Z"
+    },
+    {
+      "id": 2,
+      "project": {
+        "id": 1,
+        "identifier": "alpha",
+        "name": "Alpha Project"
+      },
+      "subject": "サンプルチケット2",
+      "status": {
+        "id": 2,
+        "name": "In Progress"
+      },
+      "tracker": {
+        "id": 2,
+        "name": "Feature"
+      },
+      "priority": {
+        "id": 3,
+        "name": "High"
+      },
+      "created_on": "2021-03-10T08:00:00Z",
+      "updated_on": "2021-04-05T11:00:00Z"
+    }
+  ]
+}

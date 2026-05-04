@@ -1,0 +1,26 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+      X-Redmine-API-Key:
+      - FILTERED
+    method: GET
+    uri: https://redmine.example.com/issues.json?limit=100&offset=0&project_id=beta&status_id=%2A
+  response:
+    body:
+      string: '{"issues":[],"total_count":0,"offset":0,"limit":100}'
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+    status:
+      code: 200
+      message: OK
+version: 1

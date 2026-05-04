@@ -1,0 +1,28 @@
+{
+  "total_count": 1,
+  "issues": [
+    {
+      "id": 3,
+      "project": {
+        "id": 2,
+        "identifier": "beta",
+        "name": "Beta Project"
+      },
+      "subject": "Beta チケット",
+      "status": {
+        "id": 5,
+        "name": "Closed"
+      },
+      "tracker": {
+        "id": 1,
+        "name": "Bug"
+      },
+      "priority": {
+        "id": 1,
+        "name": "Low"
+      },
+      "created_on": "2022-05-20T14:00:00Z",
+      "updated_on": "2022-06-01T10:00:00Z"
+    }
+  ]
+}

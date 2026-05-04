@@ -28,7 +28,10 @@ class TestFetchCommand:
         cfg = _write_config(tmp_path)
         runner = CliRunner()
 
-        with patch("staticmine.cli.fetch_projects") as mock_fetch:
+        with (
+            patch("staticmine.cli.fetch_projects") as mock_fetch,
+            patch("staticmine.cli.fetch_issues"),
+        ):
             result = runner.invoke(
                 main,
                 ["fetch", "--config", str(cfg), "--out", str(tmp_path / "raw")],
@@ -36,6 +39,27 @@ class TestFetchCommand:
 
         assert result.exit_code == 0, result.output
         mock_fetch.assert_called_once_with(
+            "https://redmine.example.com",
+            "testkey",
+            tmp_path / "raw",
+        )
+
+    def test_fetch_calls_fetch_issues_after_fetch_projects(self, tmp_path: Path) -> None:
+        """fetch command should invoke fetch_issues after fetch_projects."""
+        cfg = _write_config(tmp_path)
+        runner = CliRunner()
+
+        with (
+            patch("staticmine.cli.fetch_projects"),
+            patch("staticmine.cli.fetch_issues") as mock_fetch_issues,
+        ):
+            result = runner.invoke(
+                main,
+                ["fetch", "--config", str(cfg), "--out", str(tmp_path / "raw")],
+            )
+
+        assert result.exit_code == 0, result.output
+        mock_fetch_issues.assert_called_once_with(
             "https://redmine.example.com",
             "testkey",
             tmp_path / "raw",
@@ -51,7 +75,10 @@ class TestFetchCommand:
         )
         runner = CliRunner()
 
-        with patch("staticmine.cli.fetch_projects") as mock_fetch:
+        with (
+            patch("staticmine.cli.fetch_projects") as mock_fetch,
+            patch("staticmine.cli.fetch_issues"),
+        ):
             result = runner.invoke(main, ["fetch", "--config", str(cfg)])
 
         assert result.exit_code == 0
@@ -74,7 +101,10 @@ class TestConvertCommand:
         cfg = _write_config(tmp_path)
         runner = CliRunner()
 
-        with patch("staticmine.cli.convert_projects") as mock_convert:
+        with (
+            patch("staticmine.cli.convert_projects") as mock_convert,
+            patch("staticmine.cli.convert_issues"),
+        ):
             result = runner.invoke(
                 main,
                 [
@@ -94,6 +124,34 @@ class TestConvertCommand:
             tmp_path / "content",
         )
 
+    def test_convert_calls_convert_issues_after_convert_projects(self, tmp_path: Path) -> None:
+        """convert command should invoke convert_issues after convert_projects."""
+        cfg = _write_config(tmp_path)
+        runner = CliRunner()
+
+        with (
+            patch("staticmine.cli.convert_projects"),
+            patch("staticmine.cli.convert_issues") as mock_convert_issues,
+        ):
+            result = runner.invoke(
+                main,
+                [
+                    "convert",
+                    "--config",
+                    str(cfg),
+                    "--in",
+                    str(tmp_path / "raw"),
+                    "--out",
+                    str(tmp_path / "content"),
+                ],
+            )
+
+        assert result.exit_code == 0, result.output
+        mock_convert_issues.assert_called_once_with(
+            tmp_path / "raw",
+            tmp_path / "content",
+        )
+
     def test_convert_uses_config_dirs_when_no_override(self, tmp_path: Path) -> None:
         """convert command should use config dirs when --in/--out not specified."""
         cfg = tmp_path / "staticmine.yaml"
@@ -104,7 +162,10 @@ class TestConvertCommand:
         )
         runner = CliRunner()
 
-        with patch("staticmine.cli.convert_projects") as mock_convert:
+        with (
+            patch("staticmine.cli.convert_projects") as mock_convert,
+            patch("staticmine.cli.convert_issues"),
+        ):
             result = runner.invoke(main, ["convert", "--config", str(cfg)])
 
         assert result.exit_code == 0
@@ -116,7 +177,10 @@ class TestConvertCommand:
         """convert command should not load config when both --in and --out are given."""
         runner = CliRunner()
 
-        with patch("staticmine.cli.convert_projects") as mock_convert:
+        with (
+            patch("staticmine.cli.convert_projects") as mock_convert,
+            patch("staticmine.cli.convert_issues"),
+        ):
             result = runner.invoke(
                 main,
                 [
@@ -141,7 +205,7 @@ class TestConvertCommand:
         non_existent_config = str(tmp_path / "staticmine.yaml")
         runner = CliRunner()
 
-        with patch("staticmine.cli.convert_projects"):
+        with patch("staticmine.cli.convert_projects"), patch("staticmine.cli.convert_issues"):
             result = runner.invoke(
                 main,
                 [
