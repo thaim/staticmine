@@ -1,7 +1,8 @@
-# Pipeline output directories
-raw/
-content/
-public/
+# Pipeline output directories (root-level only — preserve tests/fixtures/raw/ etc.)
+/raw/
+/content/
+/public/
+hugo/public/
 
 # Configuration (keep examples/ only — leading slash limits to repo root)
 /staticmine.yaml
