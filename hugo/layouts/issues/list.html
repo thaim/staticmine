@@ -1,29 +1,20 @@
 {{ define "title" }}Issues - {{ .Parent.Params.name }} - {{ .Site.Title }}{{ end }}
+
+{{ define "context-bar" }}
+{{ partial "project-nav.html" (dict "project" .Parent "active" "issues") }}
+{{ end }}
+
+{{ define "breadcrumb" }}
+{{ partial "breadcrumb.html" (slice
+  (dict "label" "Projects" "url" "/projects/")
+  (dict "label" .Parent.Params.name "url" .Parent.RelPermalink)
+  (dict "label" "Issues")) }}
+{{ end }}
+
 {{ define "main" }}
-<h1>Issues: <a href="{{ .Parent.Permalink }}">{{ .Parent.Params.name }}</a></h1>
+<h1>Issues</h1>
 {{ if .Pages }}
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Status</th>
-      <th>Tracker</th>
-      <th>Priority</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{ range .Pages }}
-    <tr>
-      <td>{{ .Params.id }}</td>
-      <td><a href="{{ .Permalink }}">{{ .Params.title }}</a></td>
-      <td>{{ .Params.status }}</td>
-      <td>{{ .Params.tracker }}</td>
-      <td>{{ .Params.priority }}</td>
-    </tr>
-    {{ end }}
-  </tbody>
-</table>
+{{ partial "issue-table.html" .Pages }}
 {{ else }}
 <p>No issues found.</p>
 {{ end }}

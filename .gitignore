@@ -30,5 +30,6 @@ hugo/.hugo_build.lock
 .vscode/
 .DS_Store
 
-# Steering documents (local work records)
+# Specification and steering documents (local work records)
+docs/specs/
 docs/steering/

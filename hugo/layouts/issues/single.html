@@ -1,20 +1,32 @@
 {{ define "title" }}#{{ .Params.id }} {{ .Params.title }} - {{ .Site.Title }}{{ end }}
+
+{{ define "context-bar" }}
+{{ partial "project-nav.html" (dict "project" .Parent.Parent "active" "issues") }}
+{{ end }}
+
+{{ define "breadcrumb" }}
+{{ partial "breadcrumb.html" (slice
+  (dict "label" "Projects" "url" "/projects/")
+  (dict "label" .Parent.Parent.Params.name "url" .Parent.Parent.RelPermalink)
+  (dict "label" "Issues" "url" .Parent.RelPermalink)
+  (dict "label" (printf "#%v" .Params.id))) }}
+{{ end }}
+
 {{ define "main" }}
-<h1>#{{ .Params.id }} {{ .Params.title }}</h1>
-<dl>
-  <dt>Status</dt>
-  <dd>{{ .Params.status }}</dd>
-  <dt>Tracker</dt>
-  <dd>{{ .Params.tracker }}</dd>
-  <dt>Priority</dt>
-  <dd>{{ .Params.priority }}</dd>
-  <dt>Created</dt>
-  <dd>{{ .Params.created_on }}</dd>
-  <dt>Updated</dt>
-  <dd>{{ .Params.updated_on }}</dd>
-</dl>
-<div class="content">
-  {{ .Content }}
-</div>
-<p><a href="{{ .Parent.Permalink }}">&larr; Issue 一覧へ</a></p>
+<h1>{{ if .Params.id }}#{{ .Params.id }} {{ end }}{{ .Params.title }}</h1>
+<table class="attributes">
+  <tr>
+    <th>Tracker</th><td>{{ partial "badge.html" (dict "type" "tracker" "value" .Params.tracker) }}</td>
+    <th>作成日</th><td>{{ .Params.created_on }}</td>
+  </tr>
+  <tr>
+    <th>Status</th><td>{{ partial "badge.html" (dict "type" "status" "value" .Params.status) }}</td>
+    <th>更新日</th><td>{{ .Params.updated_on }}</td>
+  </tr>
+  <tr>
+    <th>Priority</th><td>{{ partial "badge.html" (dict "type" "priority" "value" .Params.priority) }}</td>
+    <th></th><td></td>
+  </tr>
+</table>
+{{ .Content }}
 {{ end }}

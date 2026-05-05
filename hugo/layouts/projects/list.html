@@ -1,34 +1,53 @@
 {{ define "title" }}{{ if .Parent.IsHome }}Projects{{ else }}{{ .Params.name }}{{ end }} - {{ .Site.Title }}{{ end }}
+
+{{ define "context-bar" }}
+{{ if not .Parent.IsHome }}
+{{ partial "project-nav.html" (dict "project" . "active" "overview") }}
+{{ end }}
+{{ end }}
+
+{{ define "breadcrumb" }}
+{{ if .Parent.IsHome }}
+{{ partial "breadcrumb.html" (slice (dict "label" "Projects")) }}
+{{ else }}
+{{ partial "breadcrumb.html" (slice
+  (dict "label" "Projects" "url" "/projects/")
+  (dict "label" .Params.name)) }}
+{{ end }}
+{{ end }}
+
 {{ define "main" }}
 {{ if .Parent.IsHome }}
 <h1>Projects</h1>
-<ul>
-  {{ range .Pages }}
-  <li>
-    <a href="{{ .Permalink }}">{{ .Params.name }}</a>
-    ({{ .Params.identifier }})
-    {{ if .Params.project_is_public }}
-      <span>[public]</span>
-    {{ else }}
-      <span>[private]</span>
+<table class="list projects">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>名前</th>
+      <th>識別子</th>
+      <th>公開・非公開</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range .Pages.ByTitle }}
+    <tr>
+      <td>{{ .Params.id }}</td>
+      <td><a href="{{ .Permalink }}">{{ .Params.name }}</a></td>
+      <td>{{ .Params.identifier }}</td>
+      <td>{{ if .Params.project_is_public }}Public{{ else }}Private{{ end }}</td>
+    </tr>
     {{ end }}
-  </li>
-  {{ end }}
-</ul>
+  </tbody>
+</table>
 {{ else }}
-<h1>{{ .Params.name }}</h1>
-<dl>
-  <dt>Identifier</dt>
-  <dd>{{ .Params.identifier }}</dd>
-  <dt>Visibility</dt>
-  <dd>{{ if .Params.project_is_public }}Public{{ else }}Private{{ end }}</dd>
-  <dt>Created</dt>
-  <dd>{{ .Params.created_on }}</dd>
-  <dt>Issues</dt>
-  <dd><a href="{{ .RelPermalink }}issues/">Issue 一覧</a></dd>
-</dl>
-<div class="content">
-  {{ .Content }}
+<div class="content two-column">
+  <main class="main-content">
+    <h1>{{ .Params.name }}</h1>
+    {{ .Content }}
+  </main>
+  <aside class="sidebar">
+    {{ partial "sidebar/project.html" . }}
+  </aside>
 </div>
 {{ end }}
 {{ end }}

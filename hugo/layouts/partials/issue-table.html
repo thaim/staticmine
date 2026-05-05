@@ -1,0 +1,23 @@
+{{/* 引数: Pages（page list） */}}
+<table class="list issues">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Tracker</th>
+      <th>Status</th>
+      <th>Priority</th>
+      <th>Subject</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{ range . }}
+    <tr>
+      <td><a href="{{ .Permalink }}">#{{ .Params.id }}</a></td>
+      <td>{{ partial "badge.html" (dict "type" "tracker" "value" .Params.tracker) }}</td>
+      <td>{{ partial "badge.html" (dict "type" "status" "value" .Params.status) }}</td>
+      <td>{{ partial "badge.html" (dict "type" "priority" "value" .Params.priority) }}</td>
+      <td><a href="{{ .Permalink }}">{{ .Params.title }}</a></td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>

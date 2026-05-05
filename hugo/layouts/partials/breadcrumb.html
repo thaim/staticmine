@@ -1,0 +1,12 @@
+{{/* 引数: slice of dict ({"label": "...", "url": "..."}) - url なしの要素はリンクなしで描画 */}}
+<nav class="breadcrumb">
+  <ol>
+    {{ range $i, $item := . }}
+      {{ if $item.url }}
+        <li><a href="{{ $item.url }}">{{ $item.label }}</a></li>
+      {{ else }}
+        <li>{{ $item.label }}</li>
+      {{ end }}
+    {{ end }}
+  </ol>
+</nav>

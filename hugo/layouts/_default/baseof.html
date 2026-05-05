@@ -4,13 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+  <link rel="stylesheet" href="/css/redmine.css">
 </head>
 <body>
-  <header>
-    <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
-  </header>
-  <main>
+  {{ partial "global-header.html" . }}
+
+  {{ block "context-bar" . }}{{ end }}
+
+  <div class="wrapper">
+    {{ block "breadcrumb" . }}{{ end }}
+
     {{ block "main" . }}{{ end }}
-  </main>
+  </div>
+
+  {{ partial "global-footer.html" . }}
 </body>
 </html>
