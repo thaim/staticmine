@@ -1,8 +1,4 @@
-{{/*
-  Breadcrumb partial.
-  引数: slice of dict ({"label": "...", "url": "..."})
-  最後の要素は url を無視してリンクなしで描画する。区切り `»` は CSS の ::after で付与。
-*/}}
+{{/* 引数: slice of dict ({"label": "...", "url": "..."}) - url なしの要素はリンクなしで描画 */}}
 <nav class="breadcrumb">
   <ol>
     {{ range $i, $item := . }}

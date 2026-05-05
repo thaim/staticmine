@@ -1,13 +1,5 @@
 {{ define "title" }}Issues - {{ .Parent.Params.name }} - {{ .Site.Title }}{{ end }}
 
-{{/*
-  Phase 5:
-  Redmine 風にプロジェクトのサブセットとして Issue 一覧を構成する。
-  - h1 は "Issues" のみ（プロジェクト名は含めない）
-  - プロジェクトコンテキストは Layer 2 タブとパンくずで示す
-  - テーブルは issue-table.html partial に委譲し、バッジは badge.html partial で描画
-*/}}
-
 {{ define "context-bar" }}
 {{ partial "project-nav.html" (dict "project" .Parent "active" "issues") }}
 {{ end }}

@@ -1,8 +1,4 @@
-/*
- * staticmine - Redmine-like styles
- * 最終仕上げ済み（Phase 7）。CSS カスタムプロパティで色・寸法を集約、
- * モバイル対応（max-width: 768px）含む。
- */
+/* staticmine - Redmine-like styles */
 
 /* ---- Reset (minimal) ---- */
 *,
@@ -95,7 +91,7 @@ a:hover {
   display: block;
 }
 
-/* ---- Layer 1: Global Header ---- */
+/* ---- Global Header ---- */
 .global-header {
   background-color: var(--color-primary);
   color: var(--color-bg);
@@ -125,7 +121,7 @@ a:hover {
   gap: 16px;
 }
 
-/* ---- Layer 1: Global Footer ---- */
+/* ---- Global Footer ---- */
 .global-footer {
   border-top: 1px solid var(--color-border);
   margin-top: 32px;
@@ -143,7 +139,7 @@ a:hover {
   color: var(--color-text-subtle);
 }
 
-/* ---- Layer 2: Project Nav ---- */
+/* ---- Project Nav ---- */
 .project-nav {
   background-color: var(--color-primary-light);
   border-bottom: 1px solid var(--color-border-strong);
@@ -193,7 +189,7 @@ a:hover {
   border-color: var(--color-border-strong);
 }
 
-/* ---- Layer 3: Breadcrumb ---- */
+/* ---- Breadcrumb ---- */
 .breadcrumb {
   margin: 12px 0;
   font-size: var(--font-size-base);
@@ -216,7 +212,7 @@ a:hover {
   content: "";
 }
 
-/* ---- Layer 3: Two-column layout ---- */
+/* ---- Two-column layout ---- */
 .content.two-column {
   display: flex;
   gap: 24px;
@@ -235,7 +231,7 @@ a:hover {
   padding: 12px;
 }
 
-/* ---- Layer 3: Sidebar ---- */
+/* ---- Sidebar ---- */
 .sidebar-section {
   margin-bottom: 16px;
 }
@@ -264,7 +260,7 @@ a:hover {
   color: var(--color-text);
 }
 
-/* ---- Layer 3: Table (list) ---- */
+/* ---- Table (list) ---- */
 table.list {
   width: 100%;
   border-collapse: collapse;
@@ -294,7 +290,7 @@ table.list tbody tr:hover {
   background-color: var(--color-bg-hover);
 }
 
-/* ---- Layer 3: Issue Detail ---- */
+/* ---- Issue Detail ---- */
 .main-content h1 {
   font-size: var(--font-size-h1);
   margin-bottom: 12px;
@@ -302,7 +298,7 @@ table.list tbody tr:hover {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* ---- Layer 3: Issue Attributes Table ---- */
+/* ---- Issue Attributes Table ---- */
 table.attributes {
   width: 100%;
   border-collapse: collapse;
@@ -328,7 +324,7 @@ table.attributes td {
   width: 35%;
 }
 
-/* ---- Layer 3: Badge ---- */
+/* ---- Badge ---- */
 /*
  * バッジの色は意味的に独立しているため変数化せず、ここで直接指定する。
  */
@@ -405,7 +401,7 @@ table.attributes td {
     white-space: nowrap;
   }
 
-  /* project-nav を縦並び（Layer 2 タブの幅を確保） */
+  /* project-nav を縦並び（タブの幅を確保） */
   .project-nav-inner {
     flex-direction: column;
     align-items: flex-start;

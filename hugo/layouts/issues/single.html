@@ -1,16 +1,5 @@
 {{ define "title" }}#{{ .Params.id }} {{ .Params.title }} - {{ .Site.Title }}{{ end }}
 
-{{/*
-  Phase 6 修正: Issue 詳細は Redmine 流に従い 1 カラム + attributes テーブルで表示する。
-  メタ情報（Tracker / Status / Priority / 作成日 / 更新日）はメインエリア上部の
-  2 列キー・バリュー形式の table.attributes に配置する。本文整形は M3 ステアリングで対応する。
-
-  プロジェクトコンテキストは hugo.toml の permalinks 未設定のため `.Parent.Parent` で取得する
-  （`.Parent` = issues セクション、`.Parent.Parent` = プロジェクトページ）。
-  permalinks に `issues: /issues/:id/` を設定して URL を `/projects/...` 配下から外す場合は、
-  design.md A 案（frontmatter `project_identifier` + `.Site.GetPage`）に切り替える。
-*/}}
-
 {{ define "context-bar" }}
 {{ partial "project-nav.html" (dict "project" .Parent.Parent "active" "issues") }}
 {{ end }}
@@ -39,6 +28,5 @@
     <th></th><td></td>
   </tr>
 </table>
-{{/* M3 ステアリングで description / コメント連結等の本格整形を行う。現状は Converter 出力本文をそのまま表示する。 */}}
 {{ .Content }}
 {{ end }}

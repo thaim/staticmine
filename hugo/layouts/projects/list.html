@@ -1,13 +1,5 @@
 {{ define "title" }}{{ if .Parent.IsHome }}Projects{{ else }}{{ .Params.name }}{{ end }} - {{ .Site.Title }}{{ end }}
 
-{{/*
-  Phase 4:
-  - 一覧側 (.Parent.IsHome): Phase 3 の inline パンくずを breadcrumb partial に置換、テーブルは維持。
-  - 概要側 (else): project-nav (Layer 2) + breadcrumb partial + 2 カラム（main + sidebar/project.html）に書き換え。
-  Hugo の section page rendering により、`projects/<id>/_index.md` は section page として
-  この list.html の else 側で render される（projects/single.html は使われない）。
-*/}}
-
 {{ define "context-bar" }}
 {{ if not .Parent.IsHome }}
 {{ partial "project-nav.html" (dict "project" . "active" "overview") }}
