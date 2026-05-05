@@ -1,7 +1,7 @@
 /*
  * staticmine - Redmine-like styles
- * 各 Phase で HTML + 必要 CSS をセットで完成させる方針（C 方針）。
- * Phase 7 は CSS カスタムプロパティ集約・レスポンシブ・トーン調整に限定。
+ * 最終仕上げ済み（Phase 7）。CSS カスタムプロパティで色・寸法を集約、
+ * モバイル対応（max-width: 768px）含む。
  */
 
 /* ---- Reset (minimal) ---- */
@@ -33,17 +33,50 @@ ol {
   list-style: none;
 }
 
+/* ---- Variables ---- */
+:root {
+  /* Colors */
+  --color-primary: #628DB6;
+  --color-primary-dark: #4b7299;
+  --color-primary-light: #d0e0eb;
+  --color-primary-tint: #e8f0f6;
+  --color-link: #169;
+  --color-text: #333;
+  --color-text-muted: #666;
+  --color-text-subtle: #888;
+  --color-bg: #fff;
+  --color-bg-stripe: #f6f7f8;
+  --color-bg-hover: #eef4f9;
+  --color-border: #e4e4e4;
+  --color-border-strong: #b3c8d8;
+  --color-accent: #2a5478;
+
+  /* Layout */
+  --wrapper-max-width: 1200px;
+  --sidebar-width: 240px;
+  --content-padding: 16px;
+
+  /* Typography */
+  --font-family-base: Verdana, Geneva, Helvetica, sans-serif;
+  --font-size-base: 12px;
+  --font-size-sm: 11px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-h1: 18px;
+  --line-height-base: 1.4;
+}
+
 /* ---- Base ---- */
 body {
-  font-family: Verdana, Geneva, Helvetica, sans-serif;
-  font-size: 12px;
-  line-height: 1.4;
-  color: #333;
-  background-color: #fff;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
 }
 
 a {
-  color: #169;
+  color: var(--color-link);
   text-decoration: none;
 }
 
@@ -53,9 +86,9 @@ a:hover {
 
 /* ---- Layout wrapper ---- */
 .wrapper {
-  max-width: 1200px;
+  max-width: var(--wrapper-max-width);
   margin: 0 auto;
-  padding: 16px;
+  padding: var(--content-padding);
 }
 
 .main-content {
@@ -64,13 +97,13 @@ a:hover {
 
 /* ---- Layer 1: Global Header ---- */
 .global-header {
-  background-color: #628DB6;
-  color: #fff;
-  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  padding: 8px var(--content-padding);
 }
 
 .global-header-inner {
-  max-width: 1200px;
+  max-width: var(--wrapper-max-width);
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -78,13 +111,13 @@ a:hover {
 }
 
 .global-header .site-title {
-  font-size: 16px;
+  font-size: var(--font-size-lg);
   font-weight: bold;
 }
 
 .global-header .site-title a,
 .global-header .global-nav a {
-  color: #fff;
+  color: var(--color-bg);
 }
 
 .global-nav ul {
@@ -94,57 +127,77 @@ a:hover {
 
 /* ---- Layer 1: Global Footer ---- */
 .global-footer {
-  border-top: 1px solid #e4e4e4;
+  border-top: 1px solid var(--color-border);
   margin-top: 32px;
-  padding: 12px 16px;
-  font-size: 11px;
-  color: #888;
+  padding: 12px var(--content-padding);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-subtle);
 }
 
 .global-footer-inner {
-  max-width: 1200px;
+  max-width: var(--wrapper-max-width);
   margin: 0 auto;
 }
 
 .global-footer a {
-  color: #888;
+  color: var(--color-text-subtle);
 }
 
-/* ---- Layer 3: Table (list) ---- */
-table.list {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0;
-  background-color: #fff;
+/* ---- Layer 2: Project Nav ---- */
+.project-nav {
+  background-color: var(--color-primary-light);
+  border-bottom: 1px solid var(--color-border-strong);
 }
 
-table.list thead th {
-  background-color: #628DB6;
-  color: #fff;
-  text-align: left;
-  padding: 6px 8px;
-  border: 1px solid #4b7299;
+.project-nav-inner {
+  max-width: var(--wrapper-max-width);
+  margin: 0 auto;
+  padding: 6px var(--content-padding);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.project-name {
   font-weight: bold;
+  font-size: var(--font-size-md);
+  color: var(--color-accent);
 }
 
-table.list tbody td {
-  padding: 6px 8px;
-  border: 1px solid #e4e4e4;
+.project-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-table.list tbody tr:nth-child(even) {
-  background-color: #f6f7f8;
+.project-tab a {
+  display: block;
+  padding: 4px 12px;
+  color: var(--color-link);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 2px 2px 0 0;
 }
 
-table.list tbody tr:hover {
-  background-color: #eef4f9;
+.project-tab a:hover {
+  background-color: var(--color-primary-tint);
+  text-decoration: none;
+}
+
+.project-tab.active a {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-weight: bold;
+  border-color: var(--color-border-strong);
 }
 
 /* ---- Layer 3: Breadcrumb ---- */
 .breadcrumb {
   margin: 12px 0;
-  font-size: 12px;
-  color: #666;
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
 }
 
 .breadcrumb ol {
@@ -163,56 +216,6 @@ table.list tbody tr:hover {
   content: "";
 }
 
-/* ---- Layer 2: Project Nav ---- */
-.project-nav {
-  background-color: #d0e0eb;
-  border-bottom: 1px solid #b3c8d8;
-}
-
-.project-nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 6px 16px;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.project-name {
-  font-weight: bold;
-  font-size: 14px;
-  color: #2a5478;
-}
-
-.project-tabs {
-  display: flex;
-  gap: 4px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.project-tab a {
-  display: block;
-  padding: 4px 12px;
-  color: #169;
-  border: 1px solid transparent;
-  border-bottom: none;
-  border-radius: 2px 2px 0 0;
-}
-
-.project-tab a:hover {
-  background-color: #e8f0f6;
-  text-decoration: none;
-}
-
-.project-tab.active a {
-  background-color: #fff;
-  color: #333;
-  font-weight: bold;
-  border-color: #b3c8d8;
-}
-
 /* ---- Layer 3: Two-column layout ---- */
 .content.two-column {
   display: flex;
@@ -226,9 +229,9 @@ table.list tbody tr:hover {
 }
 
 .content.two-column .sidebar {
-  flex: 0 0 240px;
-  background-color: #f6f7f8;
-  border: 1px solid #e4e4e4;
+  flex: 0 0 var(--sidebar-width);
+  background-color: var(--color-bg-stripe);
+  border: 1px solid var(--color-border);
   padding: 12px;
 }
 
@@ -238,16 +241,16 @@ table.list tbody tr:hover {
 }
 
 .sidebar-section h3 {
-  font-size: 12px;
+  font-size: var(--font-size-base);
   margin-bottom: 6px;
   padding-bottom: 4px;
-  border-bottom: 1px solid #e4e4e4;
-  color: #2a5478;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-accent);
 }
 
 .sidebar-section .meta-list {
   margin: 0;
-  font-size: 11px;
+  font-size: var(--font-size-sm);
 }
 
 .sidebar-section .meta-list dt {
@@ -258,14 +261,81 @@ table.list tbody tr:hover {
 
 .sidebar-section .meta-list dd {
   margin: 0 0 0 8px;
-  color: #333;
+  color: var(--color-text);
+}
+
+/* ---- Layer 3: Table (list) ---- */
+table.list {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  background-color: var(--color-bg);
+}
+
+table.list thead th {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  text-align: left;
+  padding: 6px 8px;
+  border: 1px solid var(--color-primary-dark);
+  font-weight: bold;
+}
+
+table.list tbody td {
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+}
+
+table.list tbody tr:nth-child(even) {
+  background-color: var(--color-bg-stripe);
+}
+
+table.list tbody tr:hover {
+  background-color: var(--color-bg-hover);
+}
+
+/* ---- Layer 3: Issue Detail ---- */
+.main-content h1 {
+  font-size: var(--font-size-h1);
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ---- Layer 3: Issue Attributes Table ---- */
+table.attributes {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+
+table.attributes th,
+table.attributes td {
+  padding: 4px 8px;
+  border: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+table.attributes th {
+  background-color: var(--color-bg-stripe);
+  text-align: left;
+  font-weight: bold;
+  color: #555;
+  width: 15%;
+}
+
+table.attributes td {
+  width: 35%;
 }
 
 /* ---- Layer 3: Badge ---- */
+/*
+ * バッジの色は意味的に独立しているため変数化せず、ここで直接指定する。
+ */
 .badge {
   display: inline-block;
   padding: 1px 6px;
-  font-size: 11px;
+  font-size: var(--font-size-sm);
   border-radius: 2px;
   border: 1px solid transparent;
   white-space: nowrap;
@@ -291,36 +361,54 @@ table.list tbody tr:hover {
 .badge.priority-urgent,
 .badge.priority-immediate { background-color: #fcc; border-color: #e88; color: #a00; }
 
-/* ---- Layer 3: Issue Detail ---- */
-.main-content h1 {
-  font-size: 18px;
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid #e4e4e4;
-}
+/* ---- Responsive: mobile (max-width: 768px) ---- */
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 12px;
+  }
 
-/* ---- Layer 3: Issue Attributes Table ---- */
-table.attributes {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 12px 0;
-}
+  .global-header-inner,
+  .global-footer-inner,
+  .project-nav-inner {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 
-table.attributes th,
-table.attributes td {
-  padding: 4px 8px;
-  border: 1px solid #e4e4e4;
-  vertical-align: top;
-}
+  /* 2 カラムを 1 カラム化 */
+  .content.two-column {
+    flex-direction: column;
+  }
 
-table.attributes th {
-  background-color: #f6f7f8;
-  text-align: left;
-  font-weight: bold;
-  color: #555;
-  width: 15%;
-}
+  .content.two-column .sidebar {
+    flex: 1 1 auto;
+    width: 100%;
+  }
 
-table.attributes td {
-  width: 35%;
+  /* attributes テーブルを縦積み */
+  table.attributes,
+  table.attributes tbody,
+  table.attributes tr,
+  table.attributes th,
+  table.attributes td {
+    display: block;
+    width: 100%;
+  }
+
+  table.attributes th {
+    border-bottom: none;
+  }
+
+  /* 一覧テーブルは横スクロール */
+  table.list {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* project-nav を縦並び（Layer 2 タブの幅を確保） */
+  .project-nav-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
