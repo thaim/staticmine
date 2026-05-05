@@ -4,13 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+  <link rel="stylesheet" href="/css/redmine.css">
 </head>
 <body>
-  <header>
-    <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
-  </header>
-  <main>
+  {{ partial "global-header.html" . }}
+
+  {{ block "context-bar" . }}{{ end }}
+
+  <div class="wrapper">
+    {{ block "breadcrumb" . }}{{ end }}
+
+    {{/*
+      Layer 3 main.
+      sidebar / 2-column layout は詳細系テンプレート（projects/single, issues/single）が
+      main block 内で <aside> ごと組み立てる方針（design.md 「baseof の block 設計」参照）。
+      これにより sidebar を持たないページに空の <aside> が残らない。
+    */}}
     {{ block "main" . }}{{ end }}
-  </main>
+  </div>
+
+  {{ partial "global-footer.html" . }}
 </body>
 </html>

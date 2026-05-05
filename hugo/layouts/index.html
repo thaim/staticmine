@@ -1,6 +1,11 @@
 {{ define "main" }}
-<h1>{{ .Site.Title }}</h1>
-<ul>
-  <li><a href="/projects/">Projects</a></li>
-</ul>
+<section class="hero">
+  <h1>{{ .Site.Title }}</h1>
+  <p>Redmine アーカイブの静的ビュー</p>
+</section>
+<section class="quick-nav">
+  <ul>
+    <li><a href="/projects/">プロジェクト一覧</a></li>
+  </ul>
+</section>
 {{ end }}

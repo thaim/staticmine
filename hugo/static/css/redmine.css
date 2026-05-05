@@ -1,0 +1,262 @@
+/*
+ * staticmine - Redmine-like styles
+ * 各 Phase で HTML + 必要 CSS をセットで完成させる方針（C 方針）。
+ * Phase 7 は CSS カスタムプロパティ集約・レスポンシブ・トーン調整に限定。
+ */
+
+/* ---- Reset (minimal) ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Base ---- */
+body {
+  font-family: Verdana, Geneva, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #333;
+  background-color: #fff;
+}
+
+a {
+  color: #169;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Layout wrapper ---- */
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.main-content {
+  display: block;
+}
+
+/* ---- Layer 1: Global Header ---- */
+.global-header {
+  background-color: #628DB6;
+  color: #fff;
+  padding: 8px 16px;
+}
+
+.global-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.global-header .site-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.global-header .site-title a,
+.global-header .global-nav a {
+  color: #fff;
+}
+
+.global-nav ul {
+  display: flex;
+  gap: 16px;
+}
+
+/* ---- Layer 1: Global Footer ---- */
+.global-footer {
+  border-top: 1px solid #e4e4e4;
+  margin-top: 32px;
+  padding: 12px 16px;
+  font-size: 11px;
+  color: #888;
+}
+
+.global-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.global-footer a {
+  color: #888;
+}
+
+/* ---- Layer 3: Table (list) ---- */
+table.list {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  background-color: #fff;
+}
+
+table.list thead th {
+  background-color: #628DB6;
+  color: #fff;
+  text-align: left;
+  padding: 6px 8px;
+  border: 1px solid #4b7299;
+  font-weight: bold;
+}
+
+table.list tbody td {
+  padding: 6px 8px;
+  border: 1px solid #e4e4e4;
+}
+
+table.list tbody tr:nth-child(even) {
+  background-color: #f6f7f8;
+}
+
+table.list tbody tr:hover {
+  background-color: #eef4f9;
+}
+
+/* ---- Layer 3: Breadcrumb ---- */
+.breadcrumb {
+  margin: 12px 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.breadcrumb li::after {
+  content: "»";
+  margin-left: 6px;
+  color: #aaa;
+}
+
+.breadcrumb li:last-child::after {
+  content: "";
+}
+
+/* ---- Layer 2: Project Nav ---- */
+.project-nav {
+  background-color: #d0e0eb;
+  border-bottom: 1px solid #b3c8d8;
+}
+
+.project-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.project-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #2a5478;
+}
+
+.project-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-tab a {
+  display: block;
+  padding: 4px 12px;
+  color: #169;
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 2px 2px 0 0;
+}
+
+.project-tab a:hover {
+  background-color: #e8f0f6;
+  text-decoration: none;
+}
+
+.project-tab.active a {
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  border-color: #b3c8d8;
+}
+
+/* ---- Layer 3: Two-column layout ---- */
+.content.two-column {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.content.two-column .main-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.content.two-column .sidebar {
+  flex: 0 0 240px;
+  background-color: #f6f7f8;
+  border: 1px solid #e4e4e4;
+  padding: 12px;
+}
+
+/* ---- Layer 3: Sidebar ---- */
+.sidebar-section {
+  margin-bottom: 16px;
+}
+
+.sidebar-section h3 {
+  font-size: 12px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e4e4e4;
+  color: #2a5478;
+}
+
+.sidebar-section .meta-list {
+  margin: 0;
+  font-size: 11px;
+}
+
+.sidebar-section .meta-list dt {
+  font-weight: bold;
+  color: #555;
+  margin-top: 4px;
+}
+
+.sidebar-section .meta-list dd {
+  margin: 0 0 0 8px;
+  color: #333;
+}

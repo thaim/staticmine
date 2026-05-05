@@ -1,0 +1,18 @@
+{{/*
+  Project navigation (Layer 2).
+  引数: dict {"project": <project page>, "active": <"overview"|"issues">}
+  Wiki 等の未実装機能は表示しない。active タブのスタイルは CSS で制御。
+*/}}
+<div class="project-nav">
+  <div class="project-nav-inner">
+    <div class="project-name">{{ .project.Params.name }}</div>
+    <ul class="project-tabs">
+      <li class="project-tab{{ if eq .active "overview" }} active{{ end }}">
+        <a href="{{ .project.Permalink }}">概要</a>
+      </li>
+      <li class="project-tab{{ if eq .active "issues" }} active{{ end }}">
+        <a href="{{ .project.Permalink }}issues/">Issues</a>
+      </li>
+    </ul>
+  </div>
+</div>
