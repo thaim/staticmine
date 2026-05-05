@@ -260,3 +260,33 @@ table.list tbody tr:hover {
   margin: 0 0 0 8px;
   color: #333;
 }
+
+/* ---- Layer 3: Badge ---- */
+.badge {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 11px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+/* status badges */
+.badge.status-new { background-color: #fee; border-color: #fbb; color: #c00; }
+.badge.status-in-progress { background-color: #ffe9b3; border-color: #f0c674; color: #8a5e00; }
+.badge.status-resolved,
+.badge.status-feedback { background-color: #e0f2d0; border-color: #b8d68a; color: #4a7a1a; }
+.badge.status-closed,
+.badge.status-rejected { background-color: #eee; border-color: #ccc; color: #666; }
+
+/* tracker badges */
+.badge.tracker-bug { background-color: #fdd; border-color: #f99; color: #a00; }
+.badge.tracker-feature { background-color: #ddf; border-color: #99f; color: #00a; }
+.badge.tracker-support { background-color: #dfd; border-color: #9f9; color: #060; }
+
+/* priority badges */
+.badge.priority-low { background-color: #f4f4f4; border-color: #ddd; color: #666; }
+.badge.priority-normal { background-color: #f4f4f4; border-color: #ddd; color: #666; }
+.badge.priority-high { background-color: #ffe6cc; border-color: #f0a060; color: #a04000; }
+.badge.priority-urgent,
+.badge.priority-immediate { background-color: #fcc; border-color: #e88; color: #a00; }

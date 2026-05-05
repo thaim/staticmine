@@ -1,0 +1,6 @@
+{{/*
+  Badge partial.
+  引数: dict {"type": "<status|tracker|priority>", "value": "<文字列>"}
+  値が空の場合は何も描画しない。クラス名は lower / replace " " "-" で正規化。
+*/ -}}
+{{ if .value }}<span class="badge {{ .type }}-{{ replace (lower .value) " " "-" }}">{{ .value }}</span>{{ end }}
