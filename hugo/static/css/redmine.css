@@ -290,3 +290,37 @@ table.list tbody tr:hover {
 .badge.priority-high { background-color: #ffe6cc; border-color: #f0a060; color: #a04000; }
 .badge.priority-urgent,
 .badge.priority-immediate { background-color: #fcc; border-color: #e88; color: #a00; }
+
+/* ---- Layer 3: Issue Detail ---- */
+.main-content h1 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e4e4e4;
+}
+
+/* ---- Layer 3: Issue Attributes Table ---- */
+table.attributes {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+}
+
+table.attributes th,
+table.attributes td {
+  padding: 4px 8px;
+  border: 1px solid #e4e4e4;
+  vertical-align: top;
+}
+
+table.attributes th {
+  background-color: #f6f7f8;
+  text-align: left;
+  font-weight: bold;
+  color: #555;
+  width: 15%;
+}
+
+table.attributes td {
+  width: 35%;
+}
