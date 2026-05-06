@@ -1,0 +1,10 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  security:
+    uses: thaim/actions/.github/workflows/reusable-gha-security.yml@v1.3.4
