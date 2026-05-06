@@ -264,8 +264,7 @@ class TestBuildSmoke:
         # Count closing </tr> tags between alpha row start and gamma row start
         tr_closes_between = between.count("</tr>")
         assert tr_closes_between == 1, (
-            f"Expected exactly 1 </tr> between alpha and gamma rows, "
-            f"found {tr_closes_between}"
+            f"Expected exactly 1 </tr> between alpha and gamma rows, found {tr_closes_between}"
         )
 
     def test_project_detail_description_in_main_content(self, tmp_path: Path) -> None:

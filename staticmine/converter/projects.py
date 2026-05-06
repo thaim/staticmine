@@ -18,9 +18,7 @@ _FRONTMATTER_FIELDS = (
 )
 
 
-def _build_frontmatter(
-    project: dict[str, Any], id_to_project: dict[int, dict[str, Any]]
-) -> str:
+def _build_frontmatter(project: dict[str, Any], id_to_project: dict[int, dict[str, Any]]) -> str:
     """Build the YAML frontmatter string for a project.
 
     Fields are written in a fixed order to ensure idempotent output.
@@ -91,9 +89,7 @@ def convert_projects(raw_dir: Path, content_dir: Path) -> None:
     with projects_json.open(encoding="utf-8") as f:
         projects: list[dict[str, Any]] = json.load(f)
 
-    id_to_project: dict[int, dict[str, Any]] = {
-        p["id"]: p for p in projects if "id" in p
-    }
+    id_to_project: dict[int, dict[str, Any]] = {p["id"]: p for p in projects if "id" in p}
 
     written = 0
     skipped = 0

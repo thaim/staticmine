@@ -320,12 +320,10 @@ class TestConvertProjects:
 
         convert_projects(raw_dir, content_dir)
 
-        text = (content_dir / "projects" / "alpha" / "_index.md").read_text(
-            encoding="utf-8"
-        )
+        text = (content_dir / "projects" / "alpha" / "_index.md").read_text(encoding="utf-8")
         # Verify body appears after the closing --- delimiter
         closing_delim_pos = text.index("---\n", 1)
-        body_section = text[closing_delim_pos + 4:]
+        body_section = text[closing_delim_pos + 4 :]
         assert "The first project" in body_section
 
     def test_convert_projects_empty_description_no_body(self, tmp_path: Path) -> None:
@@ -346,12 +344,10 @@ class TestConvertProjects:
 
         convert_projects(raw_dir, content_dir)
 
-        text = (content_dir / "projects" / "nodesc" / "_index.md").read_text(
-            encoding="utf-8"
-        )
+        text = (content_dir / "projects" / "nodesc" / "_index.md").read_text(encoding="utf-8")
         # After the closing ---, there should be only an empty line (no body)
         closing_delim_pos = text.index("---\n", 1)
-        body_section = text[closing_delim_pos + 4:]
+        body_section = text[closing_delim_pos + 4 :]
         assert body_section.strip() == ""
 
     def test_convert_projects_gamma_has_parent_identifier(self, tmp_path: Path) -> None:
@@ -362,9 +358,7 @@ class TestConvertProjects:
             content_dir = Path(tmp) / "content"
             convert_projects(FIXTURES_DIR / "raw", content_dir)
 
-            text = (content_dir / "projects" / "gamma" / "_index.md").read_text(
-                encoding="utf-8"
-            )
+            text = (content_dir / "projects" / "gamma" / "_index.md").read_text(encoding="utf-8")
             assert 'parent_identifier: "alpha"' in text
             assert 'parent_name: "Alpha Project"' in text
 
@@ -376,9 +370,7 @@ class TestConvertProjects:
             content_dir = Path(tmp) / "content"
             convert_projects(FIXTURES_DIR / "raw", content_dir)
 
-            text = (content_dir / "projects" / "alpha" / "_index.md").read_text(
-                encoding="utf-8"
-            )
+            text = (content_dir / "projects" / "alpha" / "_index.md").read_text(encoding="utf-8")
             assert "parent_identifier" not in text
             assert "parent_name" not in text
 
@@ -403,9 +395,7 @@ class TestConvertProjects:
         with caplog.at_level(logging.WARNING, logger="staticmine.converter.projects"):
             convert_projects(raw_dir, content_dir)
 
-        text = (content_dir / "projects" / "orphan" / "_index.md").read_text(
-            encoding="utf-8"
-        )
+        text = (content_dir / "projects" / "orphan" / "_index.md").read_text(encoding="utf-8")
         assert "parent_identifier" not in text
         assert "parent_name" not in text
         assert "9999" in caplog.text
