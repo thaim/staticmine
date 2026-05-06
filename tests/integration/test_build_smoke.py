@@ -27,7 +27,7 @@ class TestBuildSmoke:
         content_dir = tmp_path / "content"
         convert_projects(FIXTURES_DIR / "raw", content_dir)
 
-        for identifier in ("alpha", "beta", "gamma"):
+        for identifier in ("alpha", "beta", "gamma", "delta"):
             index_md = content_dir / "projects" / identifier / "_index.md"
             assert index_md.exists(), f"Expected {index_md} to exist"
 
@@ -201,3 +201,82 @@ class TestBuildSmoke:
 
         html = (public_dir / "projects" / "alpha" / "index.html").read_text(encoding="utf-8")
         assert "issues/" in html or "Issue 一覧" in html
+
+    def _build_hugo(self, tmp_path: Path) -> Path:
+        """Helper: convert fixtures and run Hugo build, return public_dir."""
+        content_dir = tmp_path / "content"
+        public_dir = tmp_path / "public"
+
+        convert_projects(FIXTURES_DIR / "raw", content_dir)
+
+        cmd = [
+            "hugo",
+            "--source",
+            str(PROJECT_ROOT / "hugo"),
+            "--contentDir",
+            str(content_dir.resolve()),
+            "--destination",
+            str(public_dir.resolve()),
+        ]
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        assert result.returncode == 0, (
+            f"Hugo build failed.\nstdout: {result.stdout}\nstderr: {result.stderr}"
+        )
+        return public_dir
+
+    def test_project_list_has_no_id_column(self, tmp_path: Path) -> None:
+        """projects/index.html must not contain the ID column header."""
+        public_dir = self._build_hugo(tmp_path)
+        html = (public_dir / "projects" / "index.html").read_text(encoding="utf-8")
+        assert "<th>ID</th>" not in html
+
+    def test_project_list_has_no_identifier_column(self, tmp_path: Path) -> None:
+        """projects/index.html must not contain the identifier column header."""
+        public_dir = self._build_hugo(tmp_path)
+        html = (public_dir / "projects" / "index.html").read_text(encoding="utf-8")
+        assert "<th>識別子</th>" not in html
+
+    def test_project_list_has_description_column(self, tmp_path: Path) -> None:
+        """projects/index.html must contain the description column header."""
+        public_dir = self._build_hugo(tmp_path)
+        html = (public_dir / "projects" / "index.html").read_text(encoding="utf-8")
+        assert "<th>説明</th>" in html
+
+    def test_project_list_gamma_is_sub_project_after_alpha(self, tmp_path: Path) -> None:
+        """gamma <tr> must appear directly after alpha <tr> with class sub-project."""
+        public_dir = self._build_hugo(tmp_path)
+        html = (public_dir / "projects" / "index.html").read_text(encoding="utf-8")
+
+        # gamma row must have class sub-project
+        assert 'class="sub-project"' in html
+
+        # alpha row must appear before gamma row
+        alpha_pos = html.find("Alpha Project")
+        gamma_pos = html.find("Gamma Sub")
+        assert alpha_pos != -1, "Alpha Project not found in HTML"
+        assert gamma_pos != -1, "Gamma Sub not found in HTML"
+        assert alpha_pos < gamma_pos, "Alpha Project must appear before Gamma Sub"
+
+        # gamma row must immediately follow alpha row (no other <tr> between them)
+        alpha_tr_start = html.rfind("<tr", 0, alpha_pos)
+        gamma_tr_start = html.rfind("<tr", 0, gamma_pos)
+        between = html[alpha_tr_start:gamma_tr_start]
+        # Count closing </tr> tags between alpha row start and gamma row start
+        tr_closes_between = between.count("</tr>")
+        assert tr_closes_between == 1, (
+            f"Expected exactly 1 </tr> between alpha and gamma rows, "
+            f"found {tr_closes_between}"
+        )
+
+    def test_project_detail_description_in_main_content(self, tmp_path: Path) -> None:
+        """alpha project detail page must display description in main content."""
+        public_dir = self._build_hugo(tmp_path)
+        html = (public_dir / "projects" / "alpha" / "index.html").read_text(encoding="utf-8")
+        assert "The first project" in html
+
+    def test_project_detail_gamma_sidebar_has_parent_link(self, tmp_path: Path) -> None:
+        """gamma project detail page sidebar must contain a link to alpha."""
+        public_dir = self._build_hugo(tmp_path)
+        html = (public_dir / "projects" / "gamma" / "index.html").read_text(encoding="utf-8")
+        assert "/projects/alpha/" in html
+        assert "親プロジェクト" in html

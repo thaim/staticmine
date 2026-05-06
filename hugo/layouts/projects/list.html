@@ -22,20 +22,29 @@
 <table class="list projects">
   <thead>
     <tr>
-      <th>ID</th>
       <th>名前</th>
-      <th>識別子</th>
       <th>公開・非公開</th>
+      <th>説明</th>
     </tr>
   </thead>
   <tbody>
-    {{ range .Pages.ByTitle }}
+    {{ $all := .Pages }}
+    {{ range sort $all "Title" }}
+    {{ if not .Params.parent_identifier }}
     <tr>
-      <td>{{ .Params.id }}</td>
       <td><a href="{{ .Permalink }}">{{ .Params.name }}</a></td>
-      <td>{{ .Params.identifier }}</td>
       <td>{{ if .Params.project_is_public }}Public{{ else }}Private{{ end }}</td>
+      <td>{{ .Summary }}</td>
     </tr>
+    {{ $self := . }}
+    {{ range where (sort $all "Title") "Params.parent_identifier" $self.Params.identifier }}
+    <tr class="sub-project">
+      <td class="indent"><a href="{{ .Permalink }}">{{ .Params.name }}</a></td>
+      <td>{{ if .Params.project_is_public }}Public{{ else }}Private{{ end }}</td>
+      <td>{{ .Summary }}</td>
+    </tr>
+    {{ end }}
+    {{ end }}
     {{ end }}
   </tbody>
 </table>

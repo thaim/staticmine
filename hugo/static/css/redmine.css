@@ -357,6 +357,11 @@ table.attributes td {
 .badge.priority-urgent,
 .badge.priority-immediate { background-color: #fcc; border-color: #e88; color: #a00; }
 
+/* ---- Sub-project indent ---- */
+table.list.projects tr.sub-project td.indent {
+  padding-left: 24px;
+}
+
 /* ---- Responsive: mobile (max-width: 768px) ---- */
 @media (max-width: 768px) {
   .wrapper {
