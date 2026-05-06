@@ -28,3 +28,11 @@ Local preview:
 ```bash
 hugo serve --source hugo --contentDir ../content
 ```
+
+For verification with bundled fixtures (no Redmine instance required), use `staticmine.dev.yaml` which reads `tests/fixtures/raw/` and writes to `content/dev-fixtures/` and `public/dev-fixtures/`:
+
+```bash
+uv run staticmine convert --config staticmine.dev.yaml
+uv run staticmine build --config staticmine.dev.yaml
+hugo serve --source hugo --contentDir ../content/dev-fixtures
+```

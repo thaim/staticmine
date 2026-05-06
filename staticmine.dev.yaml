@@ -1,0 +1,18 @@
+# Development / verification configuration.
+#
+# Reads `tests/fixtures/raw/` (which contains alpha / beta / gamma / delta
+# with gamma → alpha parent-child relationship) and writes to
+# `content/dev-fixtures/` and `public/dev-fixtures/`.
+#
+# Use this with `staticmine convert` and `staticmine build` to verify
+# converter / Hugo template behavior without a real Redmine instance.
+# The `redmine` section is required by the config loader but is not used
+# by the convert / build commands. `fetch` will not work with this file.
+redmine:
+  url: https://example.invalid
+  api_key: unused_in_convert_build
+
+output:
+  raw: tests/fixtures/raw/
+  content: content/dev-fixtures/
+  public: public/dev-fixtures/
