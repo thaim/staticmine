@@ -271,3 +271,27 @@ class TestConvertIssues:
         issues_dir = content_dir / "projects" / "empty" / "issues"
         subdirs = [p for p in issues_dir.iterdir() if p.is_dir()]
         assert len(subdirs) == 0
+
+
+class TestSubprojectIssues:
+    """Issues owned by a subproject must not be written under the parent project."""
+
+    def test_convert_issues_skips_issue_owned_by_other_project(self, tmp_path: Path) -> None:
+        raw_dir = tmp_path / "raw"
+        content_dir = tmp_path / "content"
+        _write_projects_json(
+            raw_dir,
+            [
+                {"id": 1, "identifier": "alpha", "name": "Alpha", "is_public": True},
+                {"id": 3, "identifier": "gamma", "name": "Gamma", "parent_id": 1},
+            ],
+        )
+        _write_issues_json(raw_dir, "alpha", [_make_issue(1, "alpha"), _make_issue(2, "gamma")])
+        _write_issues_json(raw_dir, "gamma", [_make_issue(2, "gamma")])
+
+        convert_issues(raw_dir, content_dir)
+
+        projects_dir = content_dir / "projects"
+        assert (projects_dir / "alpha" / "issues" / "1" / "index.md").exists()
+        assert not (projects_dir / "alpha" / "issues" / "2").exists()
+        assert (projects_dir / "gamma" / "issues" / "2" / "index.md").exists()

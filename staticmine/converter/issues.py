@@ -5,6 +5,8 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from staticmine.converter.frontmatter import field
+
 logger = logging.getLogger(__name__)
 
 _PLACEHOLDER_BODY = "詳細は準備中です。"
@@ -31,21 +33,17 @@ def _build_frontmatter(issue: dict[str, Any], project_is_public: bool) -> str:
     updated_on = issue.get("updated_on", "")
     project_identifier = issue.get("project", {}).get("identifier", "")
 
-    # Escape double quotes in string values
-    def _escape(val: str) -> str:
-        return val.replace('"', '\\"')
-
     lines = [
         "---",
-        f"id: {issue_id}",
-        f'title: "{_escape(title)}"',
-        f'status: "{_escape(status)}"',
-        f'tracker: "{_escape(tracker)}"',
-        f'priority: "{_escape(priority)}"',
-        f'created_on: "{created_on}"',
-        f'updated_on: "{updated_on}"',
-        f'project_identifier: "{_escape(project_identifier)}"',
-        f"project_is_public: {'true' if project_is_public else 'false'}",
+        field("id", issue_id),
+        field("title", title),
+        field("status", status),
+        field("tracker", tracker),
+        field("priority", priority),
+        field("created_on", created_on),
+        field("updated_on", updated_on),
+        field("project_identifier", project_identifier),
+        field("project_is_public", project_is_public),
         'type: "issues"',
         "---",
         "",
@@ -143,6 +141,18 @@ def convert_issues(raw_dir: Path, content_dir: Path) -> None:
             issue_id = issue.get("id")
             if issue_id is None:
                 logger.warning("Skipping issue with missing id in project '%s'", identifier_str)
+                skipped += 1
+                continue
+
+            owner = issue.get("project", {}).get("identifier")
+            if owner is not None and str(owner) != identifier_str:
+                # Subproject issue included by Redmine; it belongs to its own project.
+                logger.debug(
+                    "Skipping issue #%s owned by project '%s' under '%s'",
+                    issue_id,
+                    owner,
+                    identifier_str,
+                )
                 skipped += 1
                 continue
 

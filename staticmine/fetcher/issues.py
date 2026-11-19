@@ -32,6 +32,8 @@ def _fetch_issues_for_project(
         url = f"{redmine_url}/issues.json"
         params: dict[str, Any] = {
             "project_id": identifier,
+            # Exclude subproject issues; each subproject is fetched on its own.
+            "subproject_id": "!*",
             "status_id": "*",
             "limit": PAGE_SIZE,
             "offset": offset,
