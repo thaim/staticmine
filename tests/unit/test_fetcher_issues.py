@@ -214,6 +214,7 @@ class TestFetchIssues:
         assert params.get("status_id") == "*"
         assert params.get("project_id") == "alpha"
         assert params.get("limit") == 100
+        assert params.get("subproject_id") == "!*"
 
     def test_fetch_issues_http_error_propagates(self, tmp_path: Path) -> None:
         """fetch_issues should propagate HTTP errors from the API."""

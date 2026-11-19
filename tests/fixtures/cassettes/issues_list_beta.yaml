@@ -13,7 +13,7 @@ interactions:
       X-Redmine-API-Key:
       - FILTERED
     method: GET
-    uri: https://redmine.example.com/issues.json?limit=100&offset=0&project_id=beta&status_id=%2A
+    uri: https://redmine.example.com/issues.json?limit=100&offset=0&project_id=beta&status_id=%2A&subproject_id=%21%2A
   response:
     body:
       string: '{"issues":[],"total_count":0,"offset":0,"limit":100}'
