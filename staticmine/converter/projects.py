@@ -5,6 +5,8 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from staticmine.converter.frontmatter import field
+
 logger = logging.getLogger(__name__)
 
 _FRONTMATTER_FIELDS = (
@@ -39,11 +41,11 @@ def _build_frontmatter(project: dict[str, Any], id_to_project: dict[int, dict[st
 
     lines = [
         "---",
-        f"id: {project_id}",
-        f'identifier: "{identifier}"',
-        f'name: "{name}"',
-        f"project_is_public: {'true' if project_is_public else 'false'}",
-        f'created_on: "{created_on}"',
+        field("id", project_id),
+        field("identifier", identifier),
+        field("name", name),
+        field("project_is_public", bool(project_is_public)),
+        field("created_on", created_on),
     ]
 
     parent_id = project.get("parent_id")
@@ -52,8 +54,8 @@ def _build_frontmatter(project: dict[str, Any], id_to_project: dict[int, dict[st
         if parent is not None:
             parent_identifier = parent.get("identifier", "")
             parent_name = parent.get("name", "")
-            lines.append(f'parent_identifier: "{parent_identifier}"')
-            lines.append(f'parent_name: "{parent_name}"')
+            lines.append(field("parent_identifier", parent_identifier))
+            lines.append(field("parent_name", parent_name))
         else:
             logger.warning(
                 "parent_id %s not found in project list for project '%s'; "
